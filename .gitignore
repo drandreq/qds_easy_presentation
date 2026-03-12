@@ -9,8 +9,8 @@ venv/
 .streamlit/
 
 # Content
-content/palestra_completa.md
-content/topicos_palestra.md
+# content/palestra_completa.md
+# content/topicos_palestra.md
 
 # IDE
 .vscode/

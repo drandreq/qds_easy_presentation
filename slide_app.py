@@ -89,7 +89,26 @@ def main():
     st.sidebar.caption("🩺 Dr. André Quadros | GDG 2026")
     st.sidebar.caption("Modo Apresentação v5.1 (Medical Dark)")
 
-    # 6. Content Rendering
+    # 6. Navigation Buttons Overlay & Keyboard JS
+    st.markdown("""
+        <script>
+        const doc = window.parent.document;
+        doc.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                const nextBtn = Array.from(doc.querySelectorAll('button')).find(el => el.innerText.includes('PRÓXIMO'));
+                if (nextBtn) nextBtn.click();
+            } else if (e.key === 'ArrowLeft') {
+                const prevBtn = Array.from(doc.querySelectorAll('button')).find(el => el.innerText.includes('ANTERIOR'));
+                if (prevBtn) prevBtn.click();
+            }
+        });
+        </script>
+        
+        <div class="nav-zone nav-left" onclick="window.parent.document.querySelectorAll('button')[1].click()"></div>
+        <div class="nav-zone nav-right" onclick="window.parent.document.querySelectorAll('button')[3].click()"></div>
+    """, unsafe_allow_html=True)
+
+    # 7. Content Rendering
     SlideRenderer.render(slides_data[st.session_state.idx])
 
 if __name__ == "__main__":
