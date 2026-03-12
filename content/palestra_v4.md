@@ -4,10 +4,11 @@ subtitulo: "Dr. André Quadros"
 imagem:
   - posicao: "esquerda"
     src: "images/qrcode_instagram.png"
-    descricao: "QR Code do Evento/Siga no Instagram"
+    descricao: "Siga no Instagram"
+    width: 120
   - posicao: "direita"
     src: "images/imagem_dados.png"
-    descricao: "Aleatoriedade e Precisão: O Elo Médico-Programador"
+    descricao: "O Elo Médico-Programador"
 ---
 titulo: "André – Médico e Programador"
 texto:
@@ -130,6 +131,15 @@ falas:
   - "A ciência chama isso de 'Techno-insecurity'. É o que mais drena nossa satisfação."
 ---
 titulo: "O Ciclo do FOMO e Burnout Digital"
+texto: "O medo de estar por fora cria um estado de alerta crônico. O cérebro nunca se sente seguro para descansar."
+link: "https://www.tandfonline.com/doi/full/10.1080/13548506.2025.2587974"
+imagem:
+  src: "images/fearofmissingoutandpsychological.png"
+  descricao: "Artigo sobre FOMO e Bem-estar psicológico."
+falas:
+  - "Estudo de 2025: O FOMO não é só chato, ele é neurotóxico pelo excesso de cortisol."
+---
+titulo: "O Algoritmo do Burnout"
 mermaid: |
   graph TD
     Estado_FOMO[FOMO: Medo de estar por fora]
@@ -142,12 +152,9 @@ mermaid: |
     Estado_Hiperconexao --> Estado_Privacao
     Estado_Privacao --> Estado_Burnout
     Estado_Burnout -.-> Estado_Ansiedade
-link: "https://www.tandfonline.com/doi/full/10.1080/13548506.2025.2587974"
-imagem:
-  src: "images/fearofmissingoutandpsychological.png"
-  descricao: "Artigo sobre FOMO e Bem-estar psicológico."
 falas:
-  - "O FOMO cria um estado de alerta crônico. O cérebro nunca se sente seguro para descansar."
+  - "Este é o 'Deadlock' mental que a tecnologia mal utilizada cria."
+  - "Perceba como o loop se retroalimenta."
 ---
 titulo: "Memory Leak Cognitivo"
 texto: "Cognitive Offloading: Terceirizar o pensamento para a IA pode reduzir a conectividade neural em até 47%."
@@ -163,6 +170,7 @@ titulo: "Dívida Técnica e Memória"
 texto: "83% dos usuários de IA não lembram o que 'escreveram' minutos depois."
 imagem:
   posicao: "centro"
+  src: "images/baixaatividadecerebral.png"
   descricao: "Representação visual de um cérebro com áreas de baixa conectividade."
 falas:
   - "Sem esforço de síntese, não há armazenamento. Acumula-se dívida técnica cerebral."

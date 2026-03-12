@@ -43,19 +43,23 @@ class StyleManager:
                 overflow: hidden !important; /* NO SCROLL */
             }
 
-            /* 4. Responsive Typography */
+            /* 4. Typography - High Contrast, Centered & Professional */
             h1 {
                 color: #f0f6fc !important;
                 font-size: clamp(1.8rem, 5vh, 3.2rem) !important; /* Scale with viewport height */
                 font-weight: 800 !important;
-                margin: 0 !important;
+                margin: 0 auto 0.5rem auto !important;
                 line-height: 1.1 !important;
+                text-align: center !important;
+                width: 100%;
             }
             h2 {
                 color: #7ee787 !important;
                 font-size: clamp(1.2rem, 3.5vh, 1.8rem) !important;
                 font-weight: 300 !important;
-                margin: 0 !important;
+                margin: 0 auto !important;
+                text-align: center !important;
+                width: 100%;
             }
             .slide-text {
                 font-size: clamp(1rem, 2.8vh, 1.4rem) !important;
@@ -78,23 +82,7 @@ class StyleManager:
                 margin: 1vh auto !important;
             }
 
-            /* 6. Navigation Zones - Side Clicking */
-            .nav-zone {
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                width: 15vw;
-                z-index: 999;
-                cursor: pointer;
-                transition: background 0.2s;
-            }
-            .nav-left { left: 0; }
-            .nav-right { right: 0; }
-            .nav-zone:hover {
-                background: rgba(255, 255, 255, 0.02);
-            }
-
-            /* 7. Navigation Controls - Muted but Large */
+            /* 6. Navigation Controls - Muted but Large */
             .stButton>button {
                 background-color: #21262d;
                 color: #c9d1d9;
@@ -109,8 +97,8 @@ class StyleManager:
                 color: #ffffff !important;
             }
             
-            /* Hide Default Shrapnel */
-            header, footer, #MainMenu { visibility: hidden; }
+            /* Hide Default Shrapnel - Keep header for sidebar toggle */
+            footer, #MainMenu { visibility: hidden; }
             
             /* Notas Section - Small and discrete */
             .notinha {

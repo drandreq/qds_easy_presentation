@@ -58,8 +58,13 @@ def main():
         raw_blocks = SlideParser.get_raw_blocks(content)
         slides_data = [SlideParser.parse_block(b) for b in raw_blocks]
 
-    # 6. Navigation UI (Top Bar - High Visibility)
-    nav_col1, nav_col2, nav_col3 = st.columns([1, 6, 1])
+    # --- Content Rendering (Main Focus Area) ---
+    SlideRenderer.render(slides_data[st.session_state.idx])
+
+    st.divider()
+
+    # 6. Navigation UI (Bottom Bar - High Visibility)
+    nav_col1, nav_col2, nav_col3 = st.columns([2, 5, 2])
     with nav_col1:
         if st.button("⬅️ ANTERIOR", use_container_width=True) and st.session_state.idx > 0:
             st.session_state.idx -= 1
@@ -67,11 +72,14 @@ def main():
     with nav_col2:
         # Progress indicator
         st.progress((st.session_state.idx + 1) / len(slides_data))
-        st.markdown(f"<div style='text-align:center; color:#b19cd9;'>Slide {st.session_state.idx + 1} de {len(slides_data)}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:center; color:#7ee787;'>Slide {st.session_state.idx + 1} de {len(slides_data)}</div>", unsafe_allow_html=True)
     with nav_col3:
         if st.button("PRÓXIMO ➡️", use_container_width=True) and st.session_state.idx < len(slides_data) - 1:
             st.session_state.idx += 1
             st.rerun()
+
+    # 7. Speaker Notes (Outside the Slide Card)
+    SlideRenderer.render_notes(slides_data[st.session_state.idx])
 
     # Quick Jump Selector
     selected_slide = st.sidebar.selectbox(
@@ -89,10 +97,12 @@ def main():
     st.sidebar.caption("🩺 Dr. André Quadros | GDG 2026")
     st.sidebar.caption("Modo Apresentação v5.1 (Medical Dark)")
 
-    # 6. Navigation Buttons Overlay & Keyboard JS
+    # 6. Ghost Navigation (Keyboard Arrows + Invisible Side Zones)
+    # This is 100% invisible and doesn't interfere with the card layout
     st.markdown("""
         <script>
         const doc = window.parent.document;
+        // Keyboard Listener
         doc.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowRight') {
                 const nextBtn = Array.from(doc.querySelectorAll('button')).find(el => el.innerText.includes('PRÓXIMO'));
@@ -104,11 +114,25 @@ def main():
         });
         </script>
         
-        <div class="nav-zone nav-left" onclick="window.parent.document.querySelectorAll('button')[1].click()"></div>
-        <div class="nav-zone nav-right" onclick="window.parent.document.querySelectorAll('button')[3].click()"></div>
+        <style>
+            .ghost-nav {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                width: 10vw;
+                z-index: 999999;
+                cursor: pointer;
+                background: transparent;
+            }
+            .ghost-left { left: 0; }
+            .ghost-right { right: 0; }
+        </style>
+        
+        <div class="ghost-nav ghost-left" onclick="window.parent.document.querySelectorAll('button')[1].click()"></div>
+        <div class="ghost-nav ghost-right" onclick="window.parent.document.querySelectorAll('button')[3].click()"></div>
     """, unsafe_allow_html=True)
 
-    # 7. Content Rendering
+    # 7. Content Rendering (Main Focus Area)
     SlideRenderer.render(slides_data[st.session_state.idx])
 
 if __name__ == "__main__":
