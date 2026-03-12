@@ -97,74 +97,11 @@ def main():
     st.sidebar.caption("🩺 Dr. André Quadros | GDG 2026")
     st.sidebar.caption("Modo Apresentação v5.1 (Medical Dark)")
 
-    # 6. Ghost Navigation (V6.5 - Resilient Dual-Level)
-    st.markdown("""
-        <script>
-        const nav = (dir) => {
-            const parentDoc = window.parent.document;
-            const buttons = Array.from(parentDoc.querySelectorAll('button'));
-            const search = dir === 'next' ? 'PRÓXIMO' : 'ANTERIOR';
-            const btn = buttons.find(b => b.textContent.toUpperCase().includes(search));
-            if (btn) btn.click();
-        };
-
-        // 1. Keyboard Listeners (Capture everywhere)
-        const setupKeys = (win) => {
-            win.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') nav('next');
-                if (e.key === 'ArrowLeft') nav('prev');
-            }, true);
-        };
-        setupKeys(window);
-        setupKeys(window.parent);
-
-        // 2. Click Overlays & Floating Button (Inject into parent for full coverage)
-        const parentDoc = window.parent.document;
-        if (!parentDoc.getElementById('nav-overlay-v65')) {
-            const overlay = parentDoc.createElement('div');
-            overlay.id = 'nav-overlay-v65';
-            overlay.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999999;';
-            overlay.innerHTML = `
-                <!-- Invisible Side Zones -->
-                <div onclick="window.parent.postMessage('nav-prev', '*')" style="position:absolute; top:0; left:0; width:10vw; height:100%; pointer-events:auto; cursor:pointer; background:transparent;"></div>
-                <div onclick="window.parent.postMessage('nav-next', '*')" style="position:absolute; top:0; right:0; width:10vw; height:100%; pointer-events:auto; cursor:pointer; background:transparent;"></div>
-                
-                <!-- Visible Floating Button (Bottom-Right) -->
-                <div onclick="window.parent.postMessage('nav-next', '*')" style="
-                    position: absolute;
-                    bottom: 25px;
-                    right: 25px;
-                    width: 70px;
-                    height: 70px;
-                    background-color: #238636;
-                    color: white;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-                    cursor: pointer;
-                    pointer-events: auto;
-                    font-size: 30px;
-                    user-select: none;
-                    transition: transform 0.2s, background-color 0.2s;
-                    border: 2px solid #2ea043;
-                    font-family: sans-serif;
-                " onmouseover="this.style.transform='scale(1.1)'; this.style.backgroundColor='#2ea043';" 
-                  onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='#238636';">
-                  ➜
-                </div>
-            `;
-            parentDoc.body.appendChild(overlay);
-        }
-
-        // 3. Message Listener for the overlays
-        window.parent.addEventListener('message', (e) => {
-            if (e.data === 'nav-next') nav('next');
-            if (e.data === 'nav-prev') nav('prev');
-        });
-        </script>
-    """, unsafe_allow_html=True)
+    # 6. Global Presentation Setup
+    # (Removed experimental JS navigation to ensure UI stability)
+    
+    # 7. Content Rendering (Main Focus Area)
+    SlideRenderer.render(slides_data[st.session_state.idx])
 
     # --- App Footer/End ---
 
