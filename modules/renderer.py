@@ -35,10 +35,13 @@ class SlideRenderer:
         if slide.get("texto"): 
             texto = slide["texto"]
             if isinstance(texto, list):
-                # Use a specific div for lists to allow for better CSS control if needed
-                list_items = "".join([f"<li style='margin-bottom: 0.5rem;'>{t}</li>" for t in texto])
-                texto = f"<ul style='list-style-type: disc; text-align: left; display: inline-block; padding-left: 20px;'>{list_items}</ul>"
-            st.markdown(f'<div class="slide-text">{texto}</div>', unsafe_allow_html=True)
+                # Render as a cleaner HTML list
+                list_items = "".join([f"<li>{t}</li>" for t in texto])
+                st.markdown(f'<div class="slide-text"><ul class="topics-list">{list_items}</ul></div>', unsafe_allow_html=True)
+            else:
+                # If it's a string, it might contain markdown bullets. 
+                # Ensure they are rendered correctly inside the slide-text div.
+                st.markdown(f'<div class="slide-text">{texto}</div>', unsafe_allow_html=True)
         
         # Mermaid Rendering - High Priority
         if slide.get("mermaid"): 

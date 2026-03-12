@@ -10,8 +10,14 @@ MAIN_MD_FILE = os.path.join("content", "palestra_v4.md")
 def main():
     st.set_page_config(page_title="Debugando a Exaustão", layout="wide", initial_sidebar_state="collapsed")
     
-    # 1. Apply Centralized Styles and Animations
-    StyleManager.apply_styles()
+    # 1. State Management
+    if 'idx' not in st.session_state: 
+        st.session_state.idx = 0
+    if 'dark_mode' not in st.session_state:
+        st.session_state.dark_mode = True
+
+    # 2. Apply Centralized Styles and Animations
+    StyleManager.apply_styles(dark_mode=st.session_state.dark_mode)
 
     # 2. Load and Parse Content
     if not os.path.exists(MAIN_MD_FILE):
@@ -23,12 +29,11 @@ def main():
         raw_blocks = SlideParser.get_raw_blocks(content)
         slides_data = [SlideParser.parse_block(b) for b in raw_blocks]
 
-    # 3. State Management (Current Slide Index)
-    if 'idx' not in st.session_state: 
-        st.session_state.idx = 0
-
     # 4. Sidebar: Navigation & Settings
     st.sidebar.title("📺 Controles")
+    
+    # Theme Toggle
+    st.session_state.dark_mode = st.sidebar.toggle("🌙 Modo Escuro", value=st.session_state.dark_mode)
     
     # 5. Settings Expander (Making it "collapsible" as requested)
     with st.sidebar.expander("⚙️ Gestão de Slides"):
