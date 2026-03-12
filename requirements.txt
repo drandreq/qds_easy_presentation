@@ -1,0 +1,6 @@
+streamlit
+mermaid-python
+pandas
+numpy
+watchdog
+PyYAML

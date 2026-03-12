@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Streamlit
+.streamlit/
+
+# Content
+content/palestra_completa.md
+content/topicos_palestra.md
+
+# IDE
+.vscode/
+.idea/
