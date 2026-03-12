@@ -97,43 +97,44 @@ def main():
     st.sidebar.caption("🩺 Dr. André Quadros | GDG 2026")
     st.sidebar.caption("Modo Apresentação v5.1 (Medical Dark)")
 
-    # 6. Ghost Navigation (Keyboard Arrows + Invisible Side Zones)
-    # This is 100% invisible and doesn't interfere with the card layout
+    # 6. Ghost Navigation (Super-Robust v6.3)
+    # This script injects logic into the parent window to capture keyboard and clicks
     st.markdown("""
         <script>
-        const doc = window.parent.document;
-        // Keyboard Listener
-        doc.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowRight') {
-                const nextBtn = Array.from(doc.querySelectorAll('button')).find(el => el.innerText.includes('PRÓXIMO'));
-                if (nextBtn) nextBtn.click();
-            } else if (e.key === 'ArrowLeft') {
-                const prevBtn = Array.from(doc.querySelectorAll('button')).find(el => el.innerText.includes('ANTERIOR'));
-                if (prevBtn) prevBtn.click();
-            }
-        });
+        const parentWindow = window.parent;
+        const parentDoc = parentWindow.document;
+
+        // Unified Navigation Logic
+        parentWindow.slideNav = (direction) => {
+            const buttons = Array.from(parentDoc.querySelectorAll('button'));
+            const search = direction === 'next' ? 'PRÓXIMO' : 'ANTERIOR';
+            const btn = buttons.find(b => b.textContent.toUpperCase().includes(search));
+            if (btn) btn.click();
+        };
+
+        // Keyboard Listener (Parent Level)
+        if (!parentWindow._navInit) {
+            parentDoc.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') parentWindow.slideNav('next');
+                if (e.key === 'ArrowLeft') parentWindow.slideNav('prev');
+            });
+            parentWindow._navInit = true;
+        }
+
+        // Click Overlay Creation (Only once)
+        if (!parentDoc.getElementById('ghost-root')) {
+            const root = parentDoc.createElement('div');
+            root.id = 'ghost-root';
+            root.innerHTML = `
+                <div onclick="window.parent.slideNav('prev')" style="position:fixed; top:0; left:0; width:20vw; height:100vh; z-index:999999; cursor:pointer;"></div>
+                <div onclick="window.parent.slideNav('next')" style="position:fixed; top:0; right:0; width:20vw; height:100vh; z-index:999999; cursor:pointer;"></div>
+            `;
+            parentDoc.body.appendChild(root);
+        }
         </script>
-        
-        <style>
-            .ghost-nav {
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                width: 10vw;
-                z-index: 999999;
-                cursor: pointer;
-                background: transparent;
-            }
-            .ghost-left { left: 0; }
-            .ghost-right { right: 0; }
-        </style>
-        
-        <div class="ghost-nav ghost-left" onclick="window.parent.document.querySelectorAll('button')[1].click()"></div>
-        <div class="ghost-nav ghost-right" onclick="window.parent.document.querySelectorAll('button')[3].click()"></div>
     """, unsafe_allow_html=True)
 
-    # 7. Content Rendering (Main Focus Area)
-    SlideRenderer.render(slides_data[st.session_state.idx])
+    # --- App Footer/End ---
 
 if __name__ == "__main__":
     main()
